@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LinkStoreRequest;
 use App\Models\Link;
-use App\Models\LinkCurto;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class LinkController extends Controller
@@ -24,7 +22,7 @@ class LinkController extends Controller
 
             return response()->json(['success' => true, 'links' => $links]);
         } catch (\Exception $exception) {
-            throw ValidationException::withMessages(['success' => false, 'message' => $exception->getMessage()]);
+            return response()->json(['success' => false, 'message' => $exception->getMessage()], 500);
         }
     }
 
@@ -35,7 +33,7 @@ class LinkController extends Controller
 
             return response()->json(['success' => true]);
         } catch (\Exception $exception) {
-            throw ValidationException::withMessages(['success' => false, 'message' => $exception->getMessage()]);
+            return response()->json(['success' => false, 'message' => $exception->getMessage()], 500);
         }
     }
 
@@ -46,7 +44,7 @@ class LinkController extends Controller
 
             return response()->json(['success' => true]);
         } catch (\Exception $exception) {
-            throw ValidationException::withMessages(['success' => false, 'message' => $exception->getMessage()]);
+            return response()->json(['success' => false, 'message' => $exception->getMessage()], 500);
         }
     }
 }

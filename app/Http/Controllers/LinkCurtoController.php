@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LinkCurtoStoreRequest;
-use App\Models\Link;
 use App\Models\LinkCurto;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -23,7 +22,7 @@ class LinkCurtoController extends Controller
             $linksCurtos = $this->linksCurtos->linksCurtos($request['link_id']);
             return response()->json(['success' => true, 'linksCurtos' => $linksCurtos]);
         } catch (\Exception $exception) {
-            throw ValidationException::withMessages(['success' => false, 'message' => $exception->getMessage()]);
+            return response()->json(['success' => false, 'message' => $exception->getMessage()], 500);
         }
     }
 
@@ -34,7 +33,7 @@ class LinkCurtoController extends Controller
 
             return response()->json(['success' => $validacao]);
         } catch (\Exception $exception) {
-            throw ValidationException::withMessages(['success' => false, 'message' => $exception->getMessage()]);
+            return response()->json(['success' => false, 'message' => $exception->getMessage()], 500);
         }
     }
 
@@ -44,7 +43,7 @@ class LinkCurtoController extends Controller
             $this->linksCurtos->apagar($request);
             return response()->json(['success' => true]);
         } catch (\Exception $exception) {
-            throw ValidationException::withMessages(['success' => false, 'message' => $exception->getMessage()]);
+            return response()->json(['success' => false, 'message' => $exception->getMessage()], 500);
         }
     }
 
@@ -54,11 +53,11 @@ class LinkCurtoController extends Controller
             $linkCurto = $this->linksCurtos->validacaoLinkCurto((array)$codigo);
 
             if (!$linkCurto) {
-                return response()->json(['success' => false, 'message' => 'Link inválido']);
+                return response()->json(['success' => false, 'message' => 'Link inválido'], 500);
             }
             return response()->json(['success' => true, 'link' => $linkCurto->link]);
         } catch (\Exception $exception) {
-            throw ValidationException::withMessages(['success' => false, 'message' => $exception->getMessage()]);
+            return response()->json(['success' => false, 'message' => $exception->getMessage()], 500);
         }
     }
 }

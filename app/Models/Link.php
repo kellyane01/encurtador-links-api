@@ -23,8 +23,7 @@ class Link extends Model
 
     public function links()
     {
-        return Link::search()
-            ->latest()
+        return Link::latest()
             ->paginate(15);
     }
 
